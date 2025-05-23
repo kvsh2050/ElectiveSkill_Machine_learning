@@ -1,0 +1,12 @@
+path: /home/kavya/Desktop/ml/dataset  # Change this to the absolute or relative path
+
+train: images/train
+val: images/val
+
+names:
+  0: lion
+  1: tiger
+  2: cheetah
+  3: fox
+  4: hyena
+  5: wolf
