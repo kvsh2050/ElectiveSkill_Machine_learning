@@ -1,4 +1,3 @@
-Here's a comprehensive GitHub Markdown `README.md` covering everything you requested:
 
 ```markdown
 # Wildlife Object Detection with YOLOv8
