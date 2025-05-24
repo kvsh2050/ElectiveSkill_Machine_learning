@@ -148,7 +148,7 @@ model.export(format='onnx')  # For production
 3. **Mobile**: TFLite conversion
 
 ## Contributors
-[Your Name] - [Your Contact Info]
+kvsh2050
 
 ## License
 [MIT License](LICENSE)
