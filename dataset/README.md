@@ -39,7 +39,7 @@ wildlife_yolo_dataset/
 │       ├── image_202.txt
 │       └── ...
 │
-├── classes.txt
+├── data.yaml
 └── README.md
 ```
 
