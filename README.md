@@ -1,5 +1,3 @@
-
-```markdown
 # Wildlife Object Detection with YOLOv8
 
 ![Wildlife Detection Example](https://via.placeholder.com/800x400?text=Wildlife+YOLOv8+Detection+Example)
