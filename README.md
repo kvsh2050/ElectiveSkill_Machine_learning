@@ -150,6 +150,4 @@ model.export(format='onnx')  # For production
 ## Contributors
 kvsh2050
 
-## License
-[MIT License](LICENSE)
-```
+
