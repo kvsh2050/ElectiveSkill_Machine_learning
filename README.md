@@ -1,3 +1,182 @@
+# Image Denoising for Microscopic Images using DnCNN and Other Techniques
+
+![Microscopic Image Denoising Example](https://via.placeholder.com/800x400?text=Microscopic+Image+Denoising+Example)
+
+## Table of Contents
+
+1. [Introduction to Image Denoising](#introduction-to-image-denoising)
+2. [Understanding DnCNN and Denoising Techniques](#understanding-dncnn-and-denoising-techniques)
+3. [Dataset Preparation Guide](#dataset-preparation-guide)
+4. [Model Training Pipeline](#model-training-pipeline)
+5. [Testing & Deployment](#testing--deployment)
+
+## Introduction to Image Denoising
+
+### What is Image Denoising?
+
+Image denoising is a fundamental image restoration task that aims to remove noise from images while preserving details and structures.
+
+**Common Sources of Noise:**
+
+* Gaussian noise
+* Poisson noise
+* Salt-and-pepper noise
+* Speckle noise (common in microscopic images)
+
+### Applications in Microscopy
+
+* Enhancing low-contrast biological structures
+* Improving automated cell/nuclei segmentation
+* Noise-resilient microscopy workflows in research and diagnostics
+
+## Understanding DnCNN and Denoising Techniques
+
+### DnCNN (Denoising Convolutional Neural Network)
+
+DnCNN is a deep CNN architecture designed specifically for image denoising:
+
+* **Architecture**:
+
+  * Multiple convolutional layers with ReLU and batch normalization
+  * Learns a residual mapping from noisy image to noise
+* **Advantages**:
+
+  * Effective on Gaussian noise
+  * Extensible to blind/noise-agnostic denoising
+
+```python
+from dncnn import DnCNN  # Custom implementation
+model = DnCNN(depth=17, channels=1)  # For grayscale microscopic images
+```
+
+### Alternative Denoising Techniques
+
+* **Traditional Filters**:
+
+  * Gaussian Blur
+  * Median Filter
+  * Non-Local Means (NLM)
+* **DL-Based Models**:
+
+  * UNet for denoising
+  * Autoencoders
+  * Noise2Noise / Noise2Void (self-supervised)
+
+## Dataset Preparation Guide
+
+### Step 1: Image Collection
+
+* **Sources**:
+
+  * Microscopy datasets (BBBC, Allen Institute, DeepImageJ)
+  * Lab-generated images using fluorescence or brightfield microscopy
+* **Noise Injection (for supervised learning)**:
+
+  * Simulate noise via:
+
+    ```python
+    noisy = clean + np.random.normal(0, sigma, clean.shape)
+    ```
+
+### Step 2: Preprocessing
+
+* Grayscale conversion (if applicable)
+* Normalize to `[0, 1]` or `[-1, 1]`
+* Patch extraction (e.g., 64x64 or 128x128)
+
+### Folder Structure
+
+```
+microscopy_dataset/
+├── train/
+│   ├── clean/
+│   └── noisy/
+├── val/
+│   ├── clean/
+│   └── noisy/
+└── test/
+    ├── clean/
+    └── noisy/
+```
+
+## Model Training Pipeline
+
+### 1. Environment Setup
+
+```bash
+pip install torch torchvision numpy matplotlib
+```
+
+### 2. DnCNN Model Training
+
+```python
+for epoch in range(num_epochs):
+    for data in dataloader:
+        noisy_imgs, clean_imgs = data
+        optimizer.zero_grad()
+        output = model(noisy_imgs)
+        loss = criterion(output, clean_imgs)
+        loss.backward()
+        optimizer.step()
+```
+
+**Key Parameters:**
+
+* `depth`: Number of convolutional layers (typically 17)
+* `criterion`: MSELoss or Charbonnier Loss
+* `optimizer`: Adam (lr=1e-3)
+
+### 3. Data Augmentation (Optional)
+
+* Horizontal/vertical flips
+* Random cropping
+* Intensity shifts
+
+## Testing & Deployment
+
+### Model Evaluation
+
+```python
+from skimage.metrics import peak_signal_noise_ratio as psnr
+
+denoised = model(noisy_image.unsqueeze(0))
+score = psnr(clean_image.numpy(), denoised.detach().numpy())
+```
+
+### Visual Comparison
+
+```python
+import matplotlib.pyplot as plt
+
+plt.subplot(1, 3, 1)
+plt.title("Noisy")
+plt.imshow(noisy_image, cmap='gray')
+
+plt.subplot(1, 3, 2)
+plt.title("Denoised")
+plt.imshow(denoised, cmap='gray')
+
+plt.subplot(1, 3, 3)
+plt.title("Ground Truth")
+plt.imshow(clean_image, cmap='gray')
+```
+
+### Export Model
+
+```python
+torch.save(model.state_dict(), 'dncnn_microscopy.pth')
+```
+
+### Deployment Options
+
+1. **Integration with ImageJ plugins**
+2. **Web App for Batch Processing**: Streamlit/FastAPI + PyTorch
+3. **Microscope Integration**: Edge inference using ONNX or TensorRT
+
+## Contributors
+
+kvsh2050
+
 # Wildlife Object Detection with YOLOv8
 
 ![Wildlife Detection Example](https://via.placeholder.com/800x400?text=Wildlife+YOLOv8+Detection+Example)
