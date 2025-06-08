@@ -177,6 +177,15 @@ torch.save(model.state_dict(), 'dncnn_microscopy.pth')
 
 kvsh2050
 
+## Images of the Denoising Project 
+![Screenshot 2024-05-20 161231](https://github.com/user-attachments/assets/99874346-58fc-4c87-8fac-a4ab9c860674)
+
+![Screenshot 2024-05-20 161330](https://github.com/user-attachments/assets/024bfe33-0d30-4b63-bdb7-2861ddc56b7d)
+
+
+
+
+
 # Wildlife Object Detection with YOLOv8
 
 ![Wildlife Detection Example](https://via.placeholder.com/800x400?text=Wildlife+YOLOv8+Detection+Example)
